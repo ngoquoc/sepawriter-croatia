@@ -102,6 +102,15 @@ namespace Perrich.SepaWriter
         {
             return GenerateXml().OuterXml;
         }
+		
+		/// <summary>
+        ///     Return the XML
+        /// </summary>
+        /// <returns></returns>
+        public XmlDocument AsXml(XmlDocument xml = null)
+        {
+            return GenerateXml(xml);
+        }
 
         /// <summary>
         ///     Save in an XML file
@@ -199,7 +208,7 @@ namespace Perrich.SepaWriter
         ///     Generate the XML structure
         /// </summary>
         /// <returns></returns>
-        protected abstract XmlDocument GenerateXml();
+        protected abstract XmlDocument GenerateXml(XmlDocument xml = null);
 
         protected abstract bool CheckSchema(SepaSchema aSchema);
     }
