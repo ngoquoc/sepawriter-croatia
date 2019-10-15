@@ -142,7 +142,7 @@ namespace Perrich.SepaWriter
                 pmtInf.NewElement("PmtTpInf").NewElement("SvcLvl").NewElement("Cd", "SEPA");
             }
             if (LocalInstrumentCode != null)
-                XmlUtils.GetFirstElement(pmtInf, "PmtTpInf").NewElement("LclInstr")
+                XmlUtils.GetFirstElement(pmtInf, "PmtTpInf").NewElement("LclInstm")
                         .NewElement("Cd", LocalInstrumentCode);
 
 			if (CategoryPurposeCode != null) {
