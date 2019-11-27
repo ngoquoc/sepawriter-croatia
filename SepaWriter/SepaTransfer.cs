@@ -156,7 +156,7 @@ namespace Perrich.SepaWriter
                 throw new SepaRuleException("Transaction Id '" + id + "' must be unique in a transfer.");
             }
 
-            if (transactions.Exists(transfert => transfert.EndToEndId != null && transfert.EndToEndId == endToEndId))
+            if (transactions.Exists(transfert => transfert.EndToEndId != null && transfert.EndToEndId == endToEndId && endToEndId != "HR99"))
             {
                 throw new SepaRuleException("End to End Id '" + endToEndId + "' must be unique in a transfer.");
             }
