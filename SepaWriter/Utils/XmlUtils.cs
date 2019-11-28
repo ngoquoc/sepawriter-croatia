@@ -18,6 +18,23 @@ namespace Perrich.SepaWriter.Utils
             return document.SelectSingleNode("//" + nodeName) as XmlElement; 
         }
         /// <summary>
+        ///     Find last element in the Xml document with provided name
+        /// </summary>
+        /// <param name="document">The Xml Document</param>
+        /// <param name="nodeName">The name of the node</param>
+        /// <returns></returns>
+        public static XmlElement GetLastElement(XmlNode document, string nodeName)
+        {
+            var listNotes = document.SelectNodes("//" + nodeName);
+
+            if (listNotes.Count > 0)
+            {
+                return listNotes[listNotes.Count - 1] as XmlElement;
+            }
+
+            return null;
+        }
+        /// <summary>
         ///     Create a BIC
         /// </summary>
         /// <param name="element">The Xml element</param>

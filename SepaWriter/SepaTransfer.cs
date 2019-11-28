@@ -164,7 +164,7 @@ namespace Perrich.SepaWriter
         
         protected void AddPostalAddressElements(XmlElement pmtInf, string existingElementKey, SepaPostalAddress address)
         {
-            var pstlAdr = XmlUtils.GetFirstElement(pmtInf, existingElementKey).NewElement("PstlAdr");
+            var pstlAdr = XmlUtils.GetLastElement(pmtInf, existingElementKey).NewElement("PstlAdr");
             if (address.AddressType.HasValue)
                 pstlAdr.NewElement("AdrTp", address.AddressType.ToString());
             if (!String.IsNullOrEmpty(address.Dept))
