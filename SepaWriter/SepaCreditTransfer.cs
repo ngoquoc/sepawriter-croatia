@@ -142,12 +142,12 @@ namespace Perrich.SepaWriter
                 pmtInf.NewElement("PmtTpInf").NewElement("SvcLvl").NewElement("Cd", "SEPA");
             }
             if (LocalInstrumentCode != null)
-                XmlUtils.GetFirstElement(pmtInf, "PmtTpInf").NewElement("LclInstrm")
+                pmtInf.GetLastElement("PmtTpInf").NewElement("LclInstrm")
                         .NewElement("Cd", LocalInstrumentCode);
 
 			if (CategoryPurposeCode != null) {
-				 XmlUtils.GetFirstElement(pmtInf, "PmtTpInf").
-					 NewElement("CtgyPurp").
+                pmtInf.GetLastElement("PmtTpInf").
+                     NewElement("CtgyPurp").
 					 NewElement("Cd", CategoryPurposeCode);
 			}
 			
@@ -158,7 +158,7 @@ namespace Perrich.SepaWriter
                 AddPostalAddressElements(pmtInf, "Dbtr", Debtor.Address);
             }
 			if (InitiatingPartyId != null) {
-				XmlUtils.GetFirstElement(pmtInf, "Dbtr").
+                pmtInf.GetLastElement("Dbtr").
 					NewElement("Id").NewElement("OrgId").
 					NewElement("Othr").NewElement("Id", InitiatingPartyId);
 			}

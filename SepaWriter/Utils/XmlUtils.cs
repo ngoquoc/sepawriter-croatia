@@ -23,7 +23,7 @@ namespace Perrich.SepaWriter.Utils
         /// <param name="document">The Xml Document</param>
         /// <param name="nodeName">The name of the node</param>
         /// <returns></returns>
-        public static XmlElement GetLastElement(XmlNode document, string nodeName)
+        public static XmlElement GetLastElement(this XmlNode document, string nodeName)
         {
             var listNotes = document.SelectNodes("//" + nodeName);
 
