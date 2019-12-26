@@ -86,8 +86,7 @@ namespace Perrich.SepaWriter
 
             xml.AppendChild(xml.CreateXmlDeclaration("1.0", Encoding.UTF8.BodyName, "yes"));
             var el = (XmlElement)xml.AppendChild(xml.CreateElement("Document"));
-            el.SetAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
-            el.SetAttribute("xmlns", "urn:iso:std:iso:20022:tech:xsd:" + SepaSchemaUtils.SepaSchemaToString(schema));
+            el.SetAttribute("xmlns", "urn:iso:std:iso:20022:tech:xsd:scthr:" + SepaSchemaUtils.SepaSchemaToString(schema));
             el.NewElement("CstmrDrctDbtInitn");
 
             // Part 1: Group Header
