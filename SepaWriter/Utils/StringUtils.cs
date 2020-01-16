@@ -38,6 +38,18 @@ namespace Perrich.SepaWriter.Utils
         }
 
         /// <summary>
+        ///     Get amount from string
+        /// </summary>
+        /// <param name="amount"></param>
+        /// <returns></returns>
+        public static decimal GetAmountFromString(string amount)
+        {
+            var usCultureInfo = new CultureInfo("en-US");
+
+            return Convert.ToDecimal(amount, usCultureInfo);
+        }
+
+        /// <summary>
         ///     Format a date with time using ISO 8601
         /// </summary>
         /// <param name="date">The date to format</param>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Text;
 using System.Xml;
 using Perrich.SepaWriter.Utils;
@@ -121,8 +122,8 @@ namespace Perrich.SepaWriter
             {
                 var nbOfTxs = xml.SelectSingleNode("//NbOfTxs");
                 var ctrlSum = xml.SelectSingleNode("//CtrlSum");
-                nbOfTxs.InnerText = (Convert.ToDecimal(nbOfTxs.InnerText) + numberOfTransactions).ToString();
-                ctrlSum.InnerText = StringUtils.FormatAmount(Convert.ToDecimal(ctrlSum.InnerText) + headerControlSum);
+                nbOfTxs.InnerText = (StringUtils.GetAmountFromString(nbOfTxs.InnerText) + numberOfTransactions).ToString();
+                ctrlSum.InnerText = StringUtils.FormatAmount(StringUtils.GetAmountFromString(ctrlSum.InnerText) + headerControlSum);
             }
 
             // Part 2: Payment Information
