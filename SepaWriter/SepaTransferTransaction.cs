@@ -87,6 +87,11 @@ namespace Perrich.SepaWriter
         }
 
         /// <summary>
+        ///     Is domestic transaction
+        /// </summary>
+        public bool IsDomesticTransaction { get; set; }
+
+        /// <summary>
         ///     Return a copy of this object
         /// </summary>
         /// <returns></returns>

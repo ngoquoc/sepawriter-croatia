@@ -141,9 +141,6 @@ namespace Perrich.SepaWriter
             {
                 pmtInf.NewElement("PmtTpInf").NewElement("SvcLvl").NewElement("Cd", "SEPA");
             }
-            if (LocalInstrumentCode != null)
-                pmtInf.GetLastElement("PmtTpInf").NewElement("LclInstrm")
-                        .NewElement("Cd", LocalInstrumentCode);
 
 			if (CategoryPurposeCode != null) {
                 pmtInf.GetLastElement("PmtTpInf").
@@ -233,9 +230,14 @@ namespace Perrich.SepaWriter
                 cdtTrfTxInf.NewElement("RgltryRptg").NewElement("Dtls").NewElement("Cd", transfer.RegulatoryReportingCode);
             }
 
-            if (!string.IsNullOrEmpty(transfer.RemittanceInformation)) {
-				cdtTrfTxInf.NewElement("RmtInf").NewElement("Ustrd", transfer.RemittanceInformation);
-			}
+            if (transfer.IsDomesticTransaction)
+            {
+                cdtTrfTxInf.NewElement("RmtInf").NewElement("Strd").NewElement("AddtlRmtInf", transfer.RemittanceInformation);
+            }
+            else if (!string.IsNullOrEmpty(transfer.RemittanceInformation))
+            {
+                cdtTrfTxInf.NewElement("RmtInf").NewElement("Ustrd", transfer.RemittanceInformation);
+            }
         }
         protected override bool CheckSchema(SepaSchema aSchema)
         {
