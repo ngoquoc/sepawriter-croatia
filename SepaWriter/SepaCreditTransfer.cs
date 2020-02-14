@@ -137,28 +137,31 @@ namespace Perrich.SepaWriter
             if (IsInternational)
             {
                 pmtInf.NewElement("PmtTpInf").NewElement("InstrPrty", "NORM");
-            } else
+            }
+            else
             {
                 pmtInf.NewElement("PmtTpInf").NewElement("SvcLvl").NewElement("Cd", "SEPA");
             }
 
-			if (CategoryPurposeCode != null) {
+            if (CategoryPurposeCode != null)
+            {
                 pmtInf.GetLastElement("PmtTpInf").
                      NewElement("CtgyPurp").
-					 NewElement("Cd", CategoryPurposeCode);
-			}
-			
-			pmtInf.NewElement("ReqdExctnDt", StringUtils.FormatDate(RequestedExecutionDate));
+                     NewElement("Cd", CategoryPurposeCode);
+            }
+
+            pmtInf.NewElement("ReqdExctnDt", StringUtils.FormatDate(RequestedExecutionDate));
             pmtInf.NewElement("Dbtr").NewElement("Nm", Debtor.Name);
             if (Debtor.Address != null)
             {
                 AddPostalAddressElements(pmtInf, "Dbtr", Debtor.Address);
             }
-			if (InitiatingPartyId != null) {
+            if (InitiatingPartyId != null)
+            {
                 pmtInf.GetLastElement("Dbtr").
-					NewElement("Id").NewElement("OrgId").
-					NewElement("Othr").NewElement("Id", InitiatingPartyId);
-			}
+                    NewElement("Id").NewElement("OrgId").
+                    NewElement("Othr").NewElement("Id", InitiatingPartyId);
+            }
 
             var dbtrAcct = pmtInf.NewElement("DbtrAcct");
             dbtrAcct.NewElement("Id").NewElement("IBAN", Debtor.Iban);
@@ -173,7 +176,8 @@ namespace Perrich.SepaWriter
             if (IsInternational)
             {
                 pmtInf.NewElement("ChrgBr", SepaChargeBearerUtils.SepaChargeBearerToString(ChargeBearer));
-            } else
+            }
+            else
             {
                 pmtInf.NewElement("ChrgBr", "SLEV");
             }
@@ -221,9 +225,10 @@ namespace Perrich.SepaWriter
                 }
             }
 
-            if (!string.IsNullOrEmpty(transfer.Purpose)) {
-				cdtTrfTxInf.NewElement("Purp").NewElement("Cd", transfer.Purpose);
-			}
+            if (!string.IsNullOrEmpty(transfer.Purpose))
+            {
+                cdtTrfTxInf.NewElement("Purp").NewElement("Cd", transfer.Purpose);
+            }
 
             if (IsInternational && !string.IsNullOrEmpty(transfer.RegulatoryReportingCode))
             {
@@ -232,7 +237,17 @@ namespace Perrich.SepaWriter
 
             if (transfer.IsDomesticTransaction)
             {
-                cdtTrfTxInf.NewElement("RmtInf").NewElement("Strd").NewElement("AddtlRmtInf", transfer.RemittanceInformation);
+                var strd = cdtTrfTxInf.NewElement("RmtInf").NewElement("Strd");
+
+                var cdtrRefInf = strd.NewElement("CdtrRefInf");
+                cdtrRefInf.NewElement("Tp").NewElement("CdOrPrtry").NewElement("Cd", "SCOR");
+
+                if (!string.IsNullOrEmpty(transfer.RemittanceInformation))
+                {
+                    cdtrRefInf.NewElement("Ref", transfer.RemittanceInformation);
+                }
+
+                strd.NewElement("AddtlRmtInf", transfer.Description);
             }
             else if (!string.IsNullOrEmpty(transfer.RemittanceInformation))
             {

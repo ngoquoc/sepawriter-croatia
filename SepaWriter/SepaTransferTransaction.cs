@@ -12,7 +12,8 @@ namespace Perrich.SepaWriter
         protected SepaIbanData SepaIban;
         private string endToEndId;
         private string remittanceInformation;
-		private string purpose;
+        private string purpose;
+        private string description;
 
         /// <summary>
         ///     Create a SEPA Credit transfer transaction
@@ -31,7 +32,7 @@ namespace Perrich.SepaWriter
         ///     Payment Identifier
         /// </summary>
         public string Id { get; set; }
-        
+
         /// <summary>
         ///     The Unique Identifier (if not defined, it's defined as "MessageIdentification/PositionInTransactionsList" by the
         ///     SepaCreditTransfert)
@@ -49,14 +50,16 @@ namespace Perrich.SepaWriter
             }
         }
 
-		public string Purpose {
-			get { return purpose; }
-			set {
-				if (value != null && (value.Length < 1 || value.Length > 4))
-					throw new SepaRuleException("Purpose Length must be between 1 and 4 characters.");
-				purpose = value; 
-			}
-		}
+        public string Purpose
+        {
+            get { return purpose; }
+            set
+            {
+                if (value != null && (value.Length < 1 || value.Length > 4))
+                    throw new SepaRuleException("Purpose Length must be between 1 and 4 characters.");
+                purpose = value;
+            }
+        }
 
         /// <summary>
         ///     Remittance information (free comment)
@@ -90,6 +93,15 @@ namespace Perrich.SepaWriter
         ///     Is domestic transaction
         /// </summary>
         public bool IsDomesticTransaction { get; set; }
+
+        /// <summary>
+        ///     Description
+        /// </summary>
+        public string Description
+        {
+            get { return description; }
+            set { description = StringUtils.GetLimitedString(value, 140); }
+        }
 
         /// <summary>
         ///     Return a copy of this object
